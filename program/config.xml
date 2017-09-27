@@ -1,0 +1,99 @@
+<query-map-config>
+    <!--ConnectionController-->
+    <query-function name = "open"
+                    controller = "connection_controller"
+                    method = "init_connection"/>
+
+    <!--UserController-->
+    <query-function name = "organizer"
+                    controller = "user_controller"
+                    method = "add_organizer"/>
+    <query-function name = "user"
+                    controller = "user_controller"
+                    method = "add_participant"
+                    auth = "O"/>
+    <query-function name = "friends"
+                    controller = "user_controller"
+                    method = "invite_to_friends"
+                    auth = "U"
+                    login-field="login1"/>
+    <query-function name = "user_plan"
+                    controller = "user_controller"
+                    method = "get_participant_plan"
+                    response = "login, talk, start_timestamp, title, room"/>
+    <query-function name = "attended_talks"
+                    controller = "user_controller"
+                    method = "get_attended_talks"
+                    auth = "U"
+                    response = "talk, start_timestamp, title, room"/>
+
+    <!--EventController-->
+    <query-function name = "event"
+                    controller = "event_controller"
+                    method = "create_event"
+                    auth = "O"/>
+    <query-function name = "register_user_for_event"
+                    controller = "event_controller"
+                    method = "register_for_event"
+                    auth = "U"/>
+    <query-function name = "friends_events"
+                    controller = "event_controller"
+                    method = "get_friends_events"
+                    auth = "U"
+                    response = "login, eventname, friendlogin"/>
+
+    <!--TalkController-->
+    <query-function name = "talk"
+                    controller = "talk_controller"
+                    method = "create_talk"
+                    auth = "O"/>
+    <query-function name = "attendance"
+                    controller = "talk_controller"
+                    method = "register_attendance"
+                    auth = "U"/>
+    <query-function name = "evaluation"
+                    controller = "talk_controller"
+                    method = "register_rating"
+                    auth = "U"/>
+    <query-function name = "day_plan"
+                    controller = "talk_controller"
+                    method = "get_day_plan"
+                    response = "talk, start_timestamp, title, room"/>
+    <query-function name = "best_talks"
+                    controller = "talk_controller"
+                    method = "get_best_talks"
+                    response = "talk, start_timestamp, title, room"/>
+    <query-function name = "most_popular_talks"
+                    controller = "talk_controller"
+                    method = "get_most_popular_talks"
+                    response = "talk, start_timestamp, title, room"/>
+    <query-function name = "abandoned_talks"
+                    controller = "talk_controller"
+                    method = "get_abandoned_talks"
+                    auth = "O"
+                    response = "talk, start_timestamp, title, room, number"/>
+    <query-function name = "recently_added_talks"
+                    controller = "talk_controller"
+                    method = "get_recently_added_talks"
+                    response = "talk, speakerlogin, start_timestamp, title, room"/>
+
+    <!--TalkProposalController-->
+    <query-function name = "reject"
+                    controller = "talk_proposal_controller"
+                    method = "reject_talk_proposal"
+                    auth = "O"/>
+    <query-function name = "proposal"
+                    controller = "talk_proposal_controller"
+                    method = "create_talk_proposal"
+                    auth = "U"/>
+    <query-function name = "rejected_talks"
+                    controller = "talk_proposal_controller"
+                    method = "get_rejected_talk_proposals"
+                    auth = "U/O"
+                    response = "talk, speakerlogin, start_timestamp, title"/>
+    <query-function name = "proposals"
+                    controller = "talk_proposal_controller"
+                    method = "get_talk_proposals"
+                    auth = "O"
+                    response = "talk, speakerlogin, start_timestamp, title"/>
+</query-map-config>
