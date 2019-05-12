@@ -2,19 +2,22 @@ import psycopg2 as pg
 from query_helper import QueryHelper
 from db_connection import DbConnection
 
+
 class ConnectionController(object):
     def __init__(self, db_connection):
         self.db_connection = db_connection
 
-    def is_db_inited(self):
+    @staticmethod
+    def is_db_inited():
         try:
             test_connection = DbConnection()
             test_connection.init_connection()
             return True
-        except:
+        except Exception as exc:
             return False
 
-    def create_database(self, db_name, login, password):
+    @staticmethod
+    def create_database(db_name, login, password):
         connection = pg.connect(database=db_name, user=login, password=password)
         connection.autocommit = True
         cursor = connection.cursor()

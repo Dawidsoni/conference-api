@@ -5,7 +5,8 @@ class AuthController(object):
     def __init__(self, db_connection):
         self.db_connection = db_connection
 
-    def is_password_correct(self, password, hashed_password):
+    @staticmethod
+    def is_password_correct(password, hashed_password):
         return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
     def is_auth_correctly(self, password, query_response):
@@ -13,7 +14,8 @@ class AuthController(object):
             return False
         return self.is_password_correct(password, query_response[0][2])
 
-    def create_auth_info(self, tup, user_type):
+    @staticmethod
+    def create_auth_info(tup, user_type):
         return {"user_id": tup[0], "login": tup[1], "id": tup[3], "type": user_type}
 
     def auth_organizer(self, login, password):

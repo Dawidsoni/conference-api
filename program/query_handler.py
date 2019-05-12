@@ -41,10 +41,12 @@ class QueryHandler(object):
             print("Error while processing config file")
             raise Exception("Query handler can't be initialized")
 
-    def encode_query(self, query):
+    @staticmethod
+    def encode_query(query):
         return json.dumps(query, cls=JsonEncoder)
 
-    def decode_query(self, query):
+    @staticmethod
+    def decode_query(query):
         return json.loads(query)
 
     def process_auth(self, query, query_config):
@@ -58,7 +60,7 @@ class QueryHandler(object):
     def process_query(self, query):
         if len(query) == 0:
             return self.encode_query(QueryHelper.get_error_response())
-        query_function = query.keys()[0]
+        query_function = list(query.keys())[0]
         if query_function not in self.config_map:
             return QueryHelper.get_not_implemented_response()
         query = query[query_function]

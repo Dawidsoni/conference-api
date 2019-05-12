@@ -7,12 +7,13 @@ class UserController(object):
         self.db_connection = db_connection
         self.ORGANIZER_SECRET = "d8578edf8458ce06fbc5bb76a58c5ca4"
 
-    def hash_password(self, password):
+    @staticmethod
+    def hash_password(password):
         return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     def add_organizer(self, query, auth):
         login, password, secret = query["newlogin"], query["newpassword"], query["secret"]
-        password = self.hash_password(password)
+        password = str(self.hash_password(password))[2:-1]
         if secret != self.ORGANIZER_SECRET:
             return QueryHelper.get_error_response()
         db_query = "SELECT add_organizer('%s', '%s');" % (login, password)
