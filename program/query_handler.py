@@ -23,20 +23,21 @@ class QueryHandler(object):
         self.event_controller = EventController(self.db_connection)
         self.talk_controller = TalkController(self.db_connection)
         self.talk_proposal_controller = TalkProposalController(self.db_connection)
-        self.config_map = {}
-        self.init_config()
+        self.config_map = self.get_config()
 
-    def process_query_config(self, config):
+    def process_query_config(self, config, config_map):
         name, controller, method_name = config["name"], config["controller"], config["method"]
         query_func = getattr(getattr(self, controller), method_name)
-        self.config_map[name] = QueryConfig(query_func, config)
+        config_map[name] = QueryConfig(query_func, config)
 
-    def init_config(self):
+    def get_config(self):
         try:
+            config_map = {}
             config_root = xmlEl.parse('config.xml').getroot()
             assert(config_root.tag == "query-map-config")
             for query_node in config_root:
-                self.process_query_config(query_node.attrib)
+                self.process_query_config(query_node.attrib, config_map)
+            return config_map
         except Exception as exc:
             print("Error while processing config file")
             raise Exception("Query handler can't be initialized")

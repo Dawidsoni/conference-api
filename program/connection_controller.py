@@ -34,7 +34,7 @@ class ConnectionController(object):
             self.db_connection.execute_update(init_query)
             self.db_connection.commit_transaction()
 
-    def init_connection(self, query, auth):
+    def init_connection(self, query, _auth):
         if self.is_db_inited():
             self.db_connection.init_connection()
             return QueryHelper.get_ok_response()

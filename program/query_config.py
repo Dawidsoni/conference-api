@@ -26,7 +26,7 @@ class QueryConfig(object):
         if "response" not in config:
             return []
         labels_list = config["response"].split(',')
-        return map(lambda x: x.strip(), labels_list)
+        return list(map(lambda x: x.strip(), labels_list))
 
     def __init__(self, query_function, config):
         self.query_function = query_function
