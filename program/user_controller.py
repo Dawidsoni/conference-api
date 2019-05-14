@@ -16,15 +16,19 @@ class UserController(object):
         password = str(self.hash_password(password))[2:-1]
         if secret != self.ORGANIZER_SECRET:
             return QueryHelper.get_error_response()
-        db_query = "SELECT add_organizer('%s', '%s');" % (login, password)
-        self.db_connection.execute_update(db_query)
+        db_query = "INSERT INTO conference_user (login, password_hash)" \
+                   "VALUES ('%s', '%s');" \
+                   "INSERT INTO organizer (conference_user_id) VALUES (last_insert_rowid());" % (login, password)
+        self.db_connection.execute_script(db_query)
         return QueryHelper.get_ok_response()
 
     def add_participant(self, query, auth):
         login, password = query["newlogin"], query["newpassword"]
-        password = self.hash_password(password)
-        db_query = "SELECT add_participant('%s', '%s')" % (login, password)
-        self.db_connection.execute_update(db_query)
+        password = str(self.hash_password(password))[2:-1]
+        db_query = "INSERT INTO conference_user (login, password_hash)" \
+                   "VALUES ('%s', '%s');" \
+                   "INSERT INTO participant (conference_user_id) VALUES (last_insert_rowid());" % (login, password)
+        self.db_connection.execute_script(db_query)
         return QueryHelper.get_ok_response()
 
     def invite_to_friends(self, query, auth):

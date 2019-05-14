@@ -5,15 +5,6 @@ class TalkProposalController(object):
     def __init__(self, db_connection):
         self.db_connection = db_connection
 
-    def reject_talk_proposal(self, query, auth):
-        name = query["talk"]
-        organizer_id = auth["id"]
-        db_query = "SELECT reject_talk_proposal(" \
-                   "(SELECT id FROM talk_proposal WHERE name = '%s'), "\
-                   "now()::TIMESTAMP, %s) " % (name, organizer_id)
-        self.db_connection.execute_update(db_query)
-        return QueryHelper.get_ok_response()
-
     def create_talk_proposal(self, query, auth):
         name, title, start_date = query["talk"], query["title"], query["start_timestamp"]
         creator_id = auth["id"]

@@ -1,2 +1,3 @@
-{"open": {"baza": "dwegner_db", "login": "dwegner", "password": "xyz"}}
+{"open": {}}
 {"organizer": {"newlogin": "organizer1", "newpassword": "pass", "secret": "d8578edf8458ce06fbc5bb76a58c5ca4"}}
+{"user": {"newlogin": "participant1", "newpassword": "pass", "login": "organizer1", "password": "pass"}}

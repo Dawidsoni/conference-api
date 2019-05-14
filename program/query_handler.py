@@ -1,6 +1,5 @@
 import json
 import xml.etree.ElementTree as xmlEl
-import psycopg2 as pg
 from db_connection import DbConnection
 from connection_controller import ConnectionController
 from auth_controller import AuthController
@@ -76,6 +75,6 @@ class QueryHandler(object):
             query_response = self.encode_query(self.process_query(query))
             self.db_connection.commit_transaction()
             return query_response
-        except (pg.Error, Exception) as exc:
+        except Exception as exc:
             self.db_connection.rollback_transaction()
             return self.encode_query(QueryHelper.get_error_response())

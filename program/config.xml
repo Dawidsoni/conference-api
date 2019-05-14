@@ -78,10 +78,6 @@
                     response = "talk, speakerlogin, start_timestamp, title, room"/>
 
     <!--TalkProposalController-->
-    <query-function name = "reject"
-                    controller = "talk_proposal_controller"
-                    method = "reject_talk_proposal"
-                    auth = "O"/>
     <query-function name = "proposal"
                     controller = "talk_proposal_controller"
                     method = "create_talk_proposal"

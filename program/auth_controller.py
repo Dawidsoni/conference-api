@@ -7,7 +7,7 @@ class AuthController(object):
 
     @staticmethod
     def is_password_correct(password, hashed_password):
-        return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
+        return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
 
     def is_auth_correctly(self, password, query_response):
         if len(query_response) != 1:
